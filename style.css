@@ -36,6 +36,7 @@ body{
     display:flex;
     flex-direction:column;
     justify-content:space-evenly;
+    
 }
 
 .clock .shower .row{
@@ -49,6 +50,7 @@ body{
     background-color:cyan;
     border-radius:100%;
     opacity:.2;
+    box-shadow:0 0 10px 2px cyan;
 }
 
 .clock .letter{
