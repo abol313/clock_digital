@@ -20,7 +20,7 @@ function drawLine(x1,y1,x2,y2){
     let b = y1 - a*x1
     for(let row=0; row < rowNo ; row++)
         for(let col=0 ; col < colNo ; col++)
-            if(isPointOnLine(a,b,row,col))
+            if(x1<=col && col<=x2 && y1<=row && row<=y2 && isPointOnLine(a,b,row,col))
                 toggleLed(true,col,row)
 }
 
