@@ -129,7 +129,7 @@ function showHand(val, max, width) {
 
 // to test
 let inter
-function st() {
+function start() {
     let deg = 0
     inter = setInterval(() => {
         clear()
@@ -141,6 +141,10 @@ function st() {
         writeTime(h,m,s)
     }, 1000)
 }
-function en() {
+//to stop clock
+function stop() {
     clearInterval(inter)
 }
+
+//turn on clock !!!
+start()
