@@ -2,33 +2,45 @@ const shower = document.querySelector(".clock .shower")
 
 const ledWidth = 5, ledHeight = ledWidth
 
-const rowNo = 20,colNo = rowNo
+const rowNo = 31, colNo = rowNo
 
 let showerContent = ""
-for(let row=0; row < rowNo ; row++){
+for (let row = 0; row < rowNo; row++) {
     showerContent += '<div class="row">'
-    for(let col=0 ; col < colNo ; col++)
+    for (let col = 0; col < colNo; col++)
         showerContent += `<div class="led i${row}j${col}"></div>`
     showerContent += "</div>"
 }
 
 shower.innerHTML = showerContent
 
-function drawLine(x1,y1,x2,y2){
+function drawLine(x1, y1, x2, y2,strict=.5) {
     //ax+b -> linear graph formula
-    let a = (y2-y1) / (x2-x1)
-    let b = y1 - a*x1
-    for(let row=0; row < rowNo ; row++)
-        for(let col=0 ; col < colNo ; col++)
-            if(x1<=col && col<=x2 && y1<=row && row<=y2 && isPointOnLine(a,b,row,col))
-                toggleLed(true,col,row)
+
+    let a = (y2 - y1) / (x2 - x1);
+    // if(x2-x1==0 || y2-y1==0)
+    //     a = 0;
+
+    let b = y1 - a * x1
+
+    const minX=Math.min(x1,x2),maxX=Math.max(x1,x2)
+    const minY=Math.min(y1,y2),maxY=Math.max(y1,y2)
+    for (let row = 0; row < rowNo; row++)
+        for (let col = 0; col < colNo; col++) {
+            let toggled = true
+            toggled &&= minX<=col && col<= maxX
+            toggled &&= minY<=row && row<= maxY
+            toggled &&= isPointOnLine(a, b, col, row, x1,y1,x2,y2,strict)
+            //if (toggled)
+                toggleLed(toggled, col, row)
+        }
 }
 
 //toggles off all leds
-function clear(){
-    for(let row=0; row < rowNo ; row++)
-        for(let col=0 ; col < colNo ; col++)
-            toggleLed(false,col,row)
+function clear() {
+    for (let row = 0; row < rowNo; row++)
+        for (let col = 0; col < colNo; col++)
+            toggleLed(false, col, row)
 }
 
 
@@ -38,13 +50,65 @@ function clear(){
 //b : ax+b
 //x : point x
 //y : point y
-function isPointOnLine(a,b,x,y){
-    return a*x+b == y
+function isPointOnLine(a, b, x, y,lx1,ly1,lx2,ly2,strict) {
+    // console.log('----',a,b,x,y)
+    return getPointDistToLine(x,y,lx1,ly1,lx2,ly2)<=strict
+    if (Math.abs(a) == Infinity) return x == x1
+    return a * x + b == y
 }
 
+
+//returns dist of point related to line (vertically to line)
+// px : point x
+// py : point y
+// lx2 : line point 2 x
+// ly2 : line point 2 y
+// lx1 : line point 1 x
+// ly1 : line point 1 y
+function getPointDistToLine(px,py,lx1,ly1,lx2,ly2){
+    let deltaDeg = (Math.atan2(ly2-ly1,lx2-lx1) - Math.atan2(ly2-py,lx2-px))
+    let distToL2 = Math.sqrt((ly2-py)**2 + (lx2-px)**2)
+    return Math.abs(Math.sin(deltaDeg)*distToL2)
+}
 //mode : true(turn on) / false(turn off)
 //x : led x position
 //y : led y position
-function toggleLed(mode,x,y){
+function toggleLed(mode, x, y) {
     document.querySelector(`.i${y}j${x}`).style.opacity = mode ? "1" : ".2"
 }
+
+//draw time on shower
+//h : hour
+//m : minute
+//s : second
+function showTime(h, m, s) {
+    clear()
+}
+
+function showHand(val, max, width) {
+    val = val % max
+    //center point of clock
+    let cX = parseInt((colNo - 1) / 2), cY = parseInt((rowNo - 1) / 2)
+    let hX = parseInt(cX + Math.cos(val / (max/2) * Math.PI ) * width), hY = parseInt(cY + Math.sin(val / (max/2) * Math.PI) * width)
+
+    cY = Math.max(0, Math.min(rowNo - 1, cY))
+    hY = Math.max(0, Math.min(rowNo - 1, hY))
+    cX = Math.max(0, Math.min(colNo - 1, cX))
+    hX = Math.max(0, Math.min(colNo - 1, hX))
+
+    //console.log(cX, cY, hX, hY)
+    drawLine(cX,cY,hX,hY)
+}
+// to test
+// let inter
+// function st() {
+//     let deg = 0
+//     inter = setInterval(() => {
+//         clear()
+//         showHand(deg, 360,Math.ceil(colNo/2))
+//         deg += 1
+//     }, 100)
+// }
+// function en(){
+//     clearInterval(inter)
+// }
