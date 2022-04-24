@@ -1,5 +1,6 @@
 const shower = document.querySelector(".clock .shower")
 const letter = document.querySelector(".clock .letter .content")
+const themes = document.querySelectorAll(".themes .item")
 
 const ledWidth = 5, ledHeight = ledWidth
 
@@ -148,3 +149,25 @@ function stop() {
 
 //turn on clock !!!
 start()
+
+
+function disableAllThemes(){
+    for(let theme of themes)
+        theme.className = theme.className.replace(" enabled","")
+}
+function enableTheme(color){
+    document.body.style.setProperty("--theme-color",""+color);
+}
+
+
+for(let theme of themes){
+    //theme.setAttribute("disabled","")
+    let color = theme.classList[1]
+    theme.style.setProperty("--bg-color",color)
+    document.body.style.setProperty("--theme-color",color)
+    theme.addEventListener("click",()=>{
+        disableAllThemes()
+        enableTheme(color)
+        theme.className = theme.className.replace(" enabled","") + " enabled"
+    })
+}
