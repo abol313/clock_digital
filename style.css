@@ -100,6 +100,9 @@ body{
     .clock .letter{
         font-size:30px;
     }
+    .themes{
+        margin-top:10px;
+    }
 }
 
 *{
