@@ -1,3 +1,7 @@
+/*<!--In the name of kindly generous ALLAH
+Thanks ALLAH-->
+ */
+
 const shower = document.querySelector(".clock .shower")
 const letter = document.querySelector(".clock .letter .content")
 const themes = document.querySelectorAll(".themes .item")
