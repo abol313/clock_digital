@@ -2,7 +2,7 @@ const shower = document.querySelector(".clock .shower")
 
 const ledWidth = 5, ledHeight = ledWidth
 
-const rowNo = 5,colNo = rowNo
+const rowNo = 20,colNo = rowNo
 
 let showerContent = ""
 for(let row=0; row < rowNo ; row++){

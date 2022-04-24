@@ -12,9 +12,11 @@ body{
 
 .clock{
     box-shadow:0 0 90px rgba(0, 255, 255, 0.39);
+    min-width:200px;
     width:50vw;
     max-width:400px;
-    height:70vw;
+    min-height:300px;
+    height:calc(50vw + 100px);
     max-height:500px;
     border-radius:50px;
     overflow:hidden;
@@ -45,12 +47,24 @@ body{
     width:5px;
     height:5px;
     background-color:yellow;
+    border-radius:100%;
 }
 
 .clock .letter{
     background-color:cyan;
-    padding:20px;
+    height:150px;
     padding-top:70px;
     text-align:center;
-    font-size:2em;
+    font-size:50px;
+    
+}
+
+@media screen and (max-width:600px){
+    .clock{
+        width:85vw;
+        height:calc(85vw + 80px);
+    }
+    .clock .letter{
+        font-size:30px;
+    }
 }
