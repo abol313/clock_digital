@@ -107,7 +107,7 @@ function toggleLed(mode, x, y) {
 //s : second
 function showTime(h, m, s) {
     clear()
-    showHand(h%12,12,radius/7*4)
+    showHand(h%12+m/60,12,radius/7*4)
     showHand(m,60,radius/3*2)
     showHand(s,60,radius-3.5)
 }
