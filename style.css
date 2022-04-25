@@ -89,12 +89,11 @@ body{
 }
 .themes .enabled{
     opacity:1;
-    outline:3px solid var(--bg-color);
 }
 
 @media screen and (max-width:600px){
     .clock{
-        width:85vw;
+        width:80vw;
         height:calc(85vw + 80px);
     }
     .clock .letter{

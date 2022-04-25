@@ -168,7 +168,9 @@ for(let theme of themes){
     //theme.setAttribute("disabled","")
     let color = theme.classList[1]
     theme.style.setProperty("--bg-color",color)
-    document.body.style.setProperty("--theme-color",color)
+    disableAllThemes()
+    enableTheme(color)
+    theme.className = theme.className.replace(" enabled","") + " enabled"
     theme.addEventListener("click",()=>{
         disableAllThemes()
         enableTheme(color)
